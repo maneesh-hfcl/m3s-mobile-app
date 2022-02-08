@@ -14,7 +14,7 @@ export default function Menus({navigation}){
             <MenuDesign menuText='Live' iconName='camera-alt' menuColor='gray' onPress={() => pressHandler('Live')} />
             <MenuDesign menuText='Recording' iconName='fiber-manual-record' menuColor='gray' />
             <MenuDesign menuText='Server' iconName='server' menuColor='gray' onPress={() => pressHandler('ServerStack') } />
-            <MenuDesign menuText='Workstation' iconName='computer' menuColor='gray' onPress={()=>pressHandler('Workstation')} />
+            <MenuDesign menuText='Workstation' iconName='computer' menuColor='gray' onPress={()=>pressHandler('WrkstnStack')} />
             <MenuDesign menuText='Event' iconName='event' menuColor='gray' />
             <MenuDesign menuText='Bookmark' iconName='bookmarks' menuColor='gray' />
             <MenuDesign menuText='User' iconName='person' menuColor='gray' />

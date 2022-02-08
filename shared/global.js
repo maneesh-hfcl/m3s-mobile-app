@@ -112,7 +112,12 @@ export const globalStyles = StyleSheet.create({
     vwSubmenuHeaderBottom:{
         borderBottomWidth:1,
         borderColor:'#50806d'
-    }                      
-
-
+    },                      
+    containerPagePadding:{
+        padding:20
+    },
+    error:{
+        color:'red',
+        fontSize:11
+    }
 })

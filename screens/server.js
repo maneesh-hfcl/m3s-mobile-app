@@ -43,7 +43,7 @@ export default function Servers({navigation}){
                         <View style={globalStyles.vwRow}>
                             <Text>{item.ipAdd}</Text>
                             <View style={{marginLeft:20,}}>
-                                <MaterialIcons onPress={() => pressItemHandler(item.id, true)}  name="keyboard-arrow-down" size={20} color="gray" />
+                                <MaterialIcons onPress={() => pressItemHandler(item.id, true)}  name="keyboard-arrow-down" size={24} color="gray" />
                             </View>
                         </View>
                     </View>
@@ -51,42 +51,45 @@ export default function Servers({navigation}){
                 }
 
                 {item.expand &&
-                <View>
-                    <View style={globalStyles.vwRow}>
-                        <View style={{textAlign:'left'}}>
-                            <Text style={globalStyles.gridTitle}>Sym</Text>
-                            <Text>{item.sym}</Text>
+                <View style={globalStyles.vwRow}>
+                    <View style={{width:'95%'}}>
+                        <View style={globalStyles.vwRow}>
+                            <View style={{textAlign:'left'}}>
+                                <Text style={globalStyles.gridTitle}>Sym</Text>
+                                <Text>{item.sym}</Text>
+                            </View>
+                            <View>
+                                <Text style={globalStyles.gridTitle}>Name</Text>
+                                <Text>{item.name}</Text>
+                            </View>    
+                        </View> 
+                        <View style={globalStyles.vwRow}>
+                            <View style={{textAlign:'left'}}>
+                                <Text style={globalStyles.gridTitle}>IP Address</Text>
+                                <Text>{item.ipAdd}</Text>
+                            </View>
+                            <View>
+                                <Text style={globalStyles.gridTitle}>Type</Text>
+                                <Text>{item.type}/12</Text>
+                            </View>    
                         </View>
-                        <View>
-                            <Text style={globalStyles.gridTitle}>Name</Text>
-                            <Text>{item.name}</Text>
-                        </View>    
-                    </View> 
-                    <View style={globalStyles.vwRow}>
-                        <View style={{textAlign:'left'}}>
-                            <Text style={globalStyles.gridTitle}>IP Address</Text>
-                            <Text>{item.ipAdd}</Text>
-                        </View>
-                        <View>
-                            <Text style={globalStyles.gridTitle}>Type</Text>
-                            <Text>{item.type}/12</Text>
-                        </View>    
+                        <View style={[globalStyles.vwTileText,{justifyContent:'center'}, globalStyles.vwMarginTwice]}>
+                            <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
+                                <TouchableOpacity onPress={() => editPressHandler(item)}>
+                                    <MaterialIcons name="edit" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
+                                <MaterialIcons name="delete" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}} />
+                            </View>
+                            
+                        </View>     
                     </View>
-                    <View style={[globalStyles.vwTileText,{justifyContent:'center'}, globalStyles.vwMarginTwice]}>
-                        <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
-                            <TouchableOpacity onPress={() => editPressHandler(item)}>
-                                <MaterialIcons name="edit" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
-                            <MaterialIcons name="delete" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}} />
-                        </View>
-                        <View style={{position:'absolute', right:0, flexDirection:'row', marginVertical:0}}>
-                            <TouchableOpacity onPress={() => pressItemHandler(item.id, false)}>
-                                <MaterialIcons name="keyboard-arrow-up" size={20} color='gray'  />
-                            </TouchableOpacity>
-                        </View>
-                    </View> 
+                    <View style={{width:'5%', alignItems:'flex-end', alignSelf:"flex-end"}}>
+                        <TouchableOpacity onPress={() => pressItemHandler(item.id, false)}>
+                            <MaterialIcons name="keyboard-arrow-up" size={24} color='gray'  />
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 }
             </Card>

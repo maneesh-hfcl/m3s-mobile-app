@@ -13,6 +13,7 @@ import CustomDrawerHeader from "../components/customDrawerHeader";
 import 'react-native-gesture-handler';
 
 import HomeStackScreens from "./homeStack";
+import WrkstnStack from "./wrkstnStack";
 
 const Drawer = createDrawerNavigator();
 
@@ -95,7 +96,7 @@ const DrawerMenuScreens = () =>{
 
 
             />
-            <Drawer.Screen name="Workstation" component={Workstations} title="God Workstation" 
+            <Drawer.Screen name="WrkstnStack" component={WrkstnStack} title="God Workstation" 
             options={() => ({
                 drawerLabel:'Workstation',
                 drawerIcon:({focused, size}) =>(

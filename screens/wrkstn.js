@@ -6,8 +6,9 @@ import Card from "../shared/cardTile";
 import { globalStyles } from "../shared/global";
 import { MaterialIcons } from '@expo/vector-icons';
 import FooterComponent from "../components/footer";
+import { NavigationContainer } from "@react-navigation/native";
 
-export default function Workstations(){
+export default function Workstations({navigation}){
 
     const initSrvrLst = [
         {id:1, sym:'NVR1', name:'NVR 1', model:'cp-plus-hxhdhd', port:'8001', type:'Server', status:'Ready', expand:false},
@@ -28,55 +29,65 @@ export default function Workstations(){
           setSrvrLst(tempArr);
     }
 
+    const editPressHandler = (item) =>{
+       // console.log(item.id);
+        navigation.navigate('EditWorkstation',{editItem: item})
+    }
     const renderItems = (item)=>{
         return(
             <Card>
                 {!item.expand && 
-                <TouchableOpacity onPress={() => pressItemHandler(item.id, true)}>
-                    <View style={globalStyles.vwRow}>
+                    <View style={[globalStyles.vwRow]}>
                         <Text>{item.name}</Text>
-                        <Text>{item.model}</Text>
+                        <View style={globalStyles.vwRow}>
+                            <Text>{item.model}</Text>
+                            <MaterialIcons style={{marginLeft:20}} onPress={() => pressItemHandler(item.id, true)}  name="keyboard-arrow-down" size={24} color="gray" />
+                        </View>
                     </View>
-                </TouchableOpacity>
                 }
 
                 {item.expand &&
-                <View>
-                    <View style={globalStyles.vwRow}>
-                        <View style={{textAlign:'left'}}>
-                            <Text style={globalStyles.gridTitle}>Sym</Text>
-                            <Text>{item.sym}</Text>
+                <View style={globalStyles.vwRow}>
+                    <View style={{width:'95%'}}>
+                        <View style={globalStyles.vwRow}>
+                            <View style={{textAlign:'left'}}>
+                                <Text style={globalStyles.gridTitle}>Sym</Text>
+                                <Text>{item.sym}</Text>
+                            </View>
+                            <View>
+                                <Text style={globalStyles.gridTitle}>Name</Text>
+                                <Text>{item.name}</Text>
+                            </View>    
+                        </View> 
+                        <View style={globalStyles.vwRow}>
+                            <View style={{textAlign:'left'}}>
+                                <Text style={globalStyles.gridTitle}>IP Address</Text>
+                                <Text>{item.model}</Text>
+                            </View>
+                            <View>
+                                <Text style={globalStyles.gridTitle}>Type</Text>
+                                <Text>{item.type}/12</Text>
+                            </View>    
                         </View>
-                        <View>
-                            <Text style={globalStyles.gridTitle}>Name</Text>
-                            <Text>{item.name}</Text>
-                        </View>    
-                    </View> 
-                    <View style={globalStyles.vwRow}>
-                        <View style={{textAlign:'left'}}>
-                            <Text style={globalStyles.gridTitle}>IP Address</Text>
-                            <Text>{item.model}</Text>
-                        </View>
-                        <View>
-                            <Text style={globalStyles.gridTitle}>Type</Text>
-                            <Text>{item.type}/12</Text>
-                        </View>    
+                        <View style={[globalStyles.vwTileText,{justifyContent:'center'}, globalStyles.vwMarginTwice]}>
+                            <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
+                                <TouchableOpacity onPress={() => editPressHandler(item)}>
+                                    <MaterialIcons name="edit" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
+                                <MaterialIcons name="delete" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}} />
+                            </View>
+                           
+                        </View> 
                     </View>
-                    <View style={[globalStyles.vwTileText,{justifyContent:'center'}, globalStyles.vwMarginTwice]}>
-                        <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
-                            <MaterialIcons name="edit" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}} />
-                            
-                        </View>
-                        <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
-                            <MaterialIcons name="delete" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}} />
-                        </View>
-                        <View style={{position:'absolute', right:0, flexDirection:'row', marginVertical:0}}>
-                            <TouchableOpacity onPress={() => pressItemHandler(item.id, false)}>
-                                <MaterialIcons name="arrow-drop-up" size={40} color="#b80202" style={{ marginBottom:5}} />
-                            </TouchableOpacity>
-                        </View>
-                    </View> 
+                    <View style={{width:'5%', alignItems:'flex-end', alignSelf:"flex-end"}}>
+                        <TouchableOpacity onPress={() => pressItemHandler(item.id, false)}>
+                            <MaterialIcons name="keyboard-arrow-up" size={24} color='gray'  />
+                        </TouchableOpacity>
+                    </View>
                 </View>
+
                 }
             </Card>
         )
@@ -86,7 +97,7 @@ export default function Workstations(){
         <View style={globalStyles.container}>
             {/* <Header headerText='ServerNew' /> */}
             <View style={globalStyles.content}>
-                <TouchableOpacity onPress={() => changeTile(1)}>
+                <TouchableOpacity onPress={() => navigation.navigate('AddWorkstation')}>
                 <View style={[globalStyles.vwTileText,{justifyContent:'center',}]}>
                     <View style={[globalStyles.vwTileText,{justifyContent:'center'}, globalStyles.vwSubmenuHeader]}>
                         <MaterialIcons name="add" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}}  />

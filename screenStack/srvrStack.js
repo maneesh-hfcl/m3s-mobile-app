@@ -4,7 +4,7 @@ import EditSrvr from "../screens/edit/editSrvr";
 import Servers from "../screens/server";
 import BackHeader from "../components/backHeader";
 import { Dimensions } from "react-native";
-import AddSrvr from "../screens/edit/addSrvr";
+import AddSrvr from "../screens/add/addSrvr";
 
 const Stack = createNativeStackNavigator();
 
