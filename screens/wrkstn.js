@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import { useState } from "react/cjs/react.development";
 import Header from "../components/header";
@@ -7,6 +7,8 @@ import { globalStyles } from "../shared/global";
 import { MaterialIcons } from '@expo/vector-icons';
 import FooterComponent from "../components/footer";
 import { NavigationContainer } from "@react-navigation/native";
+import svcUrl from "../config/svcUrl";
+import { LoadGrid } from "../shared/globalFunc";
 
 export default function Workstations({navigation}){
 
@@ -18,12 +20,25 @@ export default function Workstations({navigation}){
         {id:5, sym:'NVR5', name:'NVR 5', model:'http://172.17.6.47', port:'8001', type:'Server new server', status:'Ready', expand:false},
         {id:6, sym:'NVR6', name:'NVR 6', model:'http://172.17.6.47', port:'8001', type:'Server', status:'Ready', expand:false},
     ]
-    const[srvrLst, setSrvrLst] = useState(initSrvrLst);
+    const[srvrLst, setSrvrLst] = useState([]);
+
+    useEffect(() =>{
+        loadData();
+    },[])
+
+    const loadData = async() =>{
+        let url = svcUrl.webApiUrl + "/getAllCamera";
+        let lst = await LoadGrid(url);
+        if(lst != 'error')
+        {
+            setSrvrLst(lst);
+        }
+    }
 
     const pressItemHandler = (idExpnd, boolExpnd)=>{
         //alert("you have pressed the item handler");
         let tempArr = srvrLst.map((item)=>{
-            return item.id==idExpnd?{...item, expand:boolExpnd}:item 
+            return item.DEV_ID==idExpnd?{...item, expand:boolExpnd}:item 
           });
           
           setSrvrLst(tempArr);
@@ -38,10 +53,10 @@ export default function Workstations({navigation}){
             <Card>
                 {!item.expand && 
                     <View style={[globalStyles.vwRow]}>
-                        <Text>{item.name}</Text>
+                        <Text>{item.DEV_NAME}</Text>
                         <View style={globalStyles.vwRow}>
-                            <Text>{item.model}</Text>
-                            <MaterialIcons style={{marginLeft:20}} onPress={() => pressItemHandler(item.id, true)}  name="keyboard-arrow-down" size={24} color="gray" />
+                            <Text>{item.IP}</Text>
+                            <MaterialIcons style={{marginLeft:20}} onPress={() => pressItemHandler(item.DEV_ID, true)}  name="keyboard-arrow-down" size={24} color="gray" />
                         </View>
                     </View>
                 }
@@ -51,23 +66,29 @@ export default function Workstations({navigation}){
                     <View style={{width:'95%'}}>
                         <View style={globalStyles.vwRow}>
                             <View style={{textAlign:'left'}}>
-                                <Text style={globalStyles.gridTitle}>Sym</Text>
-                                <Text>{item.sym}</Text>
+                                <Text style={globalStyles.gridTitle}>Name</Text>
+                                <Text>{item.DEV_NAME}</Text>
                             </View>
                             <View>
-                                <Text style={globalStyles.gridTitle}>Name</Text>
-                                <Text>{item.name}</Text>
+                                <Text style={globalStyles.gridTitle}>Description</Text>
+                                <Text>{item.DEV_NAME}</Text>
                             </View>    
                         </View> 
                         <View style={globalStyles.vwRow}>
                             <View style={{textAlign:'left'}}>
                                 <Text style={globalStyles.gridTitle}>IP Address</Text>
-                                <Text>{item.model}</Text>
+                                <Text>{item.IP}</Text>
                             </View>
                             <View>
                                 <Text style={globalStyles.gridTitle}>Type</Text>
-                                <Text>{item.type}/12</Text>
+                                <Text>{item.DEV_TYPE}</Text>
                             </View>    
+                        </View>
+                        <View style={globalStyles.vwRow}>
+                            <View style={{textAlign:'left'}}>
+                                <Text style={globalStyles.gridTitle}>Status</Text>
+                                <Text>{item.STAT}</Text>
+                            </View>
                         </View>
                         <View style={[globalStyles.vwTileText,{justifyContent:'center'}, globalStyles.vwMarginTwice]}>
                             <View style={[globalStyles.vwTileText,globalStyles.vwSubmenuHeader]}>
@@ -82,7 +103,7 @@ export default function Workstations({navigation}){
                         </View> 
                     </View>
                     <View style={{width:'5%', alignItems:'flex-end', alignSelf:"flex-end"}}>
-                        <TouchableOpacity onPress={() => pressItemHandler(item.id, false)}>
+                        <TouchableOpacity onPress={() => pressItemHandler(item.DEV_ID, false)}>
                             <MaterialIcons name="keyboard-arrow-up" size={24} color='gray'  />
                         </TouchableOpacity>
                     </View>
@@ -97,14 +118,7 @@ export default function Workstations({navigation}){
         <View style={globalStyles.container}>
             {/* <Header headerText='ServerNew' /> */}
             <View style={globalStyles.content}>
-                <TouchableOpacity onPress={() => navigation.navigate('AddWorkstation')}>
-                <View style={[globalStyles.vwTileText,{justifyContent:'center',}]}>
-                    <View style={[globalStyles.vwTileText,{justifyContent:'center'}, globalStyles.vwSubmenuHeader]}>
-                        <MaterialIcons name="add" size={20} color="#b80202" style={{marginVertical:5, marginHorizontal:5}}  />
-                    </View>
-                </View>
-                </TouchableOpacity>
-                <View style={{flex:1, marginVertical:6}}>
+                
                <FlatList 
                 data={srvrLst}
                 renderItem={({item})=>(
@@ -112,7 +126,7 @@ export default function Workstations({navigation}){
                 )}
                />
                
-                </View>
+
             </View>
 
             <FooterComponent />

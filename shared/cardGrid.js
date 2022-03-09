@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import {View, Text, StyleSheet} from 'react-native';
+import { globalStyles } from "./global";
 
 export default function CardGrid(props){
     
     return(
-        <View style={[styles.card, (props.type=='header'?styles.cardHeader:'')]}>
+        <View style={[styles.card, 
+                (props.type=='header'?styles.cardHeader: props.type=='lnkSelect'?globalStyles.lnkSelect:'')]}>
             <View style={styles.cardContent}>
                 {props.children}
 

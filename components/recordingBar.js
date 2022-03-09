@@ -106,8 +106,10 @@ export default function RecordingBar(){
                     />
                 }
             </View>
-        <ScrollView horizontal={true} style={{ backgroundColor:'', paddingBottom:5}}>
-            <View style={{backgroundColor:'black', marginHorizontal:5}}>
+        <ScrollView horizontal={true} 
+            showsHorizontalScrollIndicator={false}
+        style={{ backgroundColor:'', paddingBottom:5, marginHorizontal:5}}>
+            <View style={{backgroundColor:'black', }}>
                 <View style={{flexDirection:'row', marginTop:2}}>
                 {
                     

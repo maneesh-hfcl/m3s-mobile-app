@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image, Alert, Button} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer'
 import LiveScreen from "../screens/live";
 import Workstations from "../screens/wrkstn";
@@ -14,10 +14,22 @@ import 'react-native-gesture-handler';
 
 import HomeStackScreens from "./homeStack";
 import WrkstnStack from "./wrkstnStack";
+import Events from "../screens/event";
+import Bookmark from "../screens/bookmark";
+import Users from "../screens/users";
+import UsrStackScreens from "./usrStack";
+import BkmrkStackScreens from "./bkmrkStack";
+import Header from "../components/header";
+import HeaderMenuTitle from "../components/headerMenuTitle";
+import { MaterialIcons } from '@expo/vector-icons';
+import Map from "../screens/map";
 
 const Drawer = createDrawerNavigator();
 
+
+
 const DrawerMenuScreens = () =>{
+  
     return(
         <Drawer.Navigator
 
@@ -80,32 +92,46 @@ const DrawerMenuScreens = () =>{
                     // ),
                     headerTitle:'Camera viewing',
                     headerTitleAlign:"center",
+                    headerRight:()=>(
+                        <TouchableOpacity onPress={() => changeTile(1)}>
+                            <MaterialIcons name="add-circle" size={32} color="#b80202" style={{marginVertical:5, marginHorizontal:10}} />
+                        </TouchableOpacity>
+                         
+                    ) 
                     
                 })
                 
             }
             />
             <Drawer.Screen name="ServerStack" component={SrvrStackScreens} headerTitle="God Workstation"
-               options={() => ({
+               options={({navigation, route}) => ({
                 drawerIcon:({focused, size}) =>(
                     <DrawerMenuDesign menuText='Server' iconName='server' menuColor='gray' />
                 ),
                 drawerLabel:'Server',
-              headerTitle:'Server'
+                headerTitle:'Server',
+                headerRight:()=>(
+                    <HeaderMenuTitle navigation={navigation} lnkMenu='AddServer' />
+                     
+                ) 
             })}
 
 
             />
             <Drawer.Screen name="WrkstnStack" component={WrkstnStack} title="God Workstation" 
-            options={() => ({
+            options={({navigation}) => ({
                 drawerLabel:'Workstation',
                 drawerIcon:({focused, size}) =>(
                     <DrawerMenuDesign menuText='Workstation' iconName='computer' menuColor='gray' />
                 ),
-                headerTitle:'Workstation'  
+                headerTitle:'Workstation',
+                headerRight:()=>(
+                    <HeaderMenuTitle navigation={navigation} lnkMenu='AddWorkstation' />
+                     
+                )   
             })}
             />
-            <Drawer.Screen name="Event" component={Workstations} 
+            <Drawer.Screen name="Event" component={Events} 
             options={() => ({
                 drawerLabel:'Event',
                 drawerIcon:({focused, size}) =>(
@@ -114,24 +140,39 @@ const DrawerMenuScreens = () =>{
                 headerTitle:'Event'  
             })}
             />
-            <Drawer.Screen name="Bookmark" component={Workstations} 
-            options={() => ({
+            <Drawer.Screen name="BkmrkStack" component={BkmrkStackScreens} 
+            options={({navigation}) => ({
                 drawerLabel:'Bookmark',
                 drawerIcon:({focused, size}) =>(
                     <DrawerMenuDesign menuText='Workstation' iconName='bookmarks' menuColor='gray' />
                 ),
-                headerTitle:'Bookmark'  
+                headerTitle:'Video Bookmark',
+                headerRight:()=>(
+                    <HeaderMenuTitle navigation={navigation} lnkMenu='AddBkmrk' />
+                     
+                )  
             })}
             />
-            <Drawer.Screen name="User" component={Workstations} 
+            <Drawer.Screen name="UsrStack" component={UsrStackScreens} 
             options={() => ({
-                drawerLabel:'User',
+                drawerLabel:'Users',
                 drawerIcon:({focused, size}) =>(
                     <DrawerMenuDesign menuText='Workstation' iconName='person' menuColor='gray' />
                 ),
-                headerTitle:'User'  
+                headerTitle:'Users'  
             })}
             />
+
+            <Drawer.Screen name="Map" component={Map} 
+                options={() => ({
+                drawerLabel:'Map',
+                drawerIcon:({focused, size}) =>(
+                    <DrawerMenuDesign menuText='Map' iconName='map' menuColor='gray' />
+                ),
+                headerTitle:'Map'
+            })}
+            />
+
             <Drawer.Screen name="Sign out" component={Login} 
             options={() => ({
                 drawerLabel:'Sign out',
@@ -142,6 +183,8 @@ const DrawerMenuScreens = () =>{
                 swipeEnabled:false
             })}
             />
+
+            
         </Drawer.Navigator>
     )
 }

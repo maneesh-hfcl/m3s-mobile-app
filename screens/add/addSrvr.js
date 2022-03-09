@@ -7,6 +7,7 @@ import { Formik } from "formik";
 import * as yup from 'yup';
 import { Picker } from "@react-native-picker/picker";
 import CardPicker from "../../shared/cardPicker";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function AddSrvr(){
 //    const {editItem} = route.params;
@@ -70,7 +71,8 @@ export default function AddSrvr(){
         >
             {
                 (formikProps) => (
-                    <View style={[styles.containerPage, globalStyles.container ]}>
+                <View style={[styles.containerPage, globalStyles.container ]}>
+                    <ScrollView>
                     <Text style={globalStyles.text}>Sym</Text>
                     <TextInput value={formikProps.values.sym} 
                         onChangeText={formikProps.handleChange('sym')}
@@ -145,9 +147,10 @@ export default function AddSrvr(){
                         onBlur={formikProps.handleBlur('checkAlive')}
                     />
 
-                     <View style={globalStyles.vwMarginOnly}>
+                    <View style={globalStyles.vwMarginOnly}>
                         <CustButton text='Save' onPress={formikProps.handleSubmit} />
                     </View>
+                    </ScrollView>
                 </View>
                 )
             }

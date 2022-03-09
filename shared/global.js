@@ -7,6 +7,9 @@ export const globalStyles = StyleSheet.create({
         backgroundColor:'#fff',
         marginVertical:0,
     },
+    containerPage:{
+        padding:20
+    },
     content:{
         margin:5,
             fontSize:13,
@@ -20,14 +23,15 @@ export const globalStyles = StyleSheet.create({
     },
     text:{
         marginTop:5,
-        marginBottom:5
+        marginBottom:5,
+        color:'gray',
     },
     inputLogin:{
         borderColor:'#c4c4c4',
         borderWidth:1,
         padding:5,
         marginBottom:10,
-        borderRadius:5,
+        borderRadius:0,
     },
     vwMarginOnly:{
         marginTop:5,
@@ -98,7 +102,7 @@ export const globalStyles = StyleSheet.create({
     vwSubmenuHeader:{
         justifyContent:'center', 
         alignItems:'center',
-        marginHorizontal:5,
+        marginHorizontal:10,
         borderWidth:0,
         borderRadius:15,
         backgroundColor:'#f7e1d5',
@@ -119,5 +123,23 @@ export const globalStyles = StyleSheet.create({
     error:{
         color:'red',
         fontSize:11
+    },
+    plusIcon:{
+        marginVertical:5,
+        marginHorizontal:5,
+        borderWidth:1,
+        borderColor:'#9e9e9e',
+        borderRadius:5,
+        width:25,
+        textAlign:'center'
+        
+    },
+    plusIconVw:{
+       
+        alignItems:'flex-end',
+        marginRight:10,
+    },
+    lnkSelect:{
+        backgroundColor: '#bcd7e6'
     }
 })

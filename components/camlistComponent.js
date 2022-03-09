@@ -1,8 +1,11 @@
-import React,{useState} from "react";
-import { View, Text, StyleSheet, FlatList,TouchableOpacity } from "react-native";
+import React,{useEffect, useState} from "react";
+import { View, Text, StyleSheet, FlatList,TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
+
+import svcUrl from "../config/svcUrl";
 import CardLnkTitle from "../shared/cardLnkTile";
 import Card from "../shared/cardTile";
 import { globalStyles } from "../shared/global";
+import { LoadGrid, LoadGridComn } from "../shared/globalFunc";
 
 export default function CamListComponent({selMap, selIndx, onPress}){
     const[camlst, setCamLst] = useState([
@@ -22,6 +25,38 @@ export default function CamListComponent({selMap, selIndx, onPress}){
         {title:'Cam 14', key:'14'},
         {title:'Cam 15', key:'15'},
     ]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+        loadCamByMap(selMap);
+    }, [selMap])
+
+    const loadCamByMap = async (mapSym)=>{
+      //  alert(mapSym.length);
+        let url = svcUrl.webApiUrl + ((mapSym =='')?"/getAllCamera": ("/GetCamFromMap/" + mapSym));
+        console.log(url);
+        let lst = await LoadGridComn(url);
+        if(lst != 'error')
+        {
+            if(mapSym == '')
+            {
+                lst = lst.map((item)=>{
+                    return {Title:item.DEV_SYM, SubTitle:item.DEV_NAME}
+                  });
+            }
+            else{
+                console.log(lst);
+                if(lst.data.length > 0)
+                    lst = lst.data[0].DetailCollections;
+                else
+                    lst = [];
+                console.log(lst);
+            }
+            setCamLst(lst);
+            setIsLoading(false);
+        }
+    }
 
     const FlastlistItemSeparator = () => {
         return(
@@ -40,21 +75,40 @@ export default function CamListComponent({selMap, selIndx, onPress}){
     }
 
     return(
-        <View style={{ backgroundColor:'#fff', marginVertical:10}}>
+        <View style={{ backgroundColor:'#fff', marginVertical:10, height:280}}>
+            {
+                isLoading?(
+                    <ActivityIndicator size="large" style={globalStyles.containerPagePadding} />
+                ):
+                (
+                    
+                        (camlst.length) < 1?
+                        (
+                            <View style={globalStyles.containerPage}>
+                                <Text>No camera present</Text>
+                            </View>
+                        )
+                        :
+                        (
+                            <FlatList
+                            // ItemSeparatorComponent={FlastlistItemSeparator}
+                            data={camlst}
+                            numColumns={2}
+                            renderItem={({item})=>(
+                                    <CardLnkTitle>
+                                        <TouchableOpacity onPress={() => onPress(item.Title, selIndx)}>
+                                            <Text style={globalStyles.lnkText}>{item.SubTitle}</Text>
+                                        </TouchableOpacity>
+                                    </CardLnkTitle>
+                                
+                            )}
+                        />
+    
 
-        <FlatList
-            // ItemSeparatorComponent={FlastlistItemSeparator}
-            numColumns={2}
-            data={camlst}
-            renderItem={({item})=>(
-                    <CardLnkTitle>
-                        <TouchableOpacity onPress={() => onPress(item.title, selIndx)}>
-                            <Text style={globalStyles.lnkText}>{item.title}</Text>
-                        </TouchableOpacity>
-                    </CardLnkTitle>
-                
-            )}
-        />
+                        )
+                    
+                )
+            }
         </View>
     )
 }
