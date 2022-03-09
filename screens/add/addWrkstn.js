@@ -1,6 +1,5 @@
 import React from "react";
 import {View, Text, TextInput,  TouchableWithoutFeedback, Keyboard} from 'react-native';
-import {} from 'formik'
 import { globalStyles } from "../../shared/global";
 import CustButton from "../../shared/CustButton";
 import { Formik } from "formik";

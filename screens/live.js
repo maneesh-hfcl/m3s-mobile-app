@@ -13,6 +13,7 @@ import CardSelCam from "../shared/cardSelCam";
 import RecordingBar from "../components/recordingBar";
 import FooterComponent from "../components/footer";
 import CardGrid from "../shared/cardGrid";
+import globalColor from "../shared/globalColor";
 
 export default function LiveScreen({navigation}){
     const video = React.useRef(null);
@@ -42,9 +43,16 @@ export default function LiveScreen({navigation}){
     }
 
     const mapPressHandler = (map)=>{
-        setSelMap(map);
+        //alert(map.MAPSYM);
+
+        setSelMap(map.Id);
 //        alert('You have pressed the map button' + mapCam);
     }
+
+    const mapPressHandlerAll = () =>{
+        setSelMap('');
+    }
+
     const openSelCam = (indx)=>{
 //        alert(`open the camera: ${indx}`)
         setSelIndxCam(indx);
@@ -89,9 +97,9 @@ export default function LiveScreen({navigation}){
                             <Text>2x2</Text>
                         </TouchableOpacity>
                     </Card> */}
-                    <TouchableOpacity onPress={() => changeTile(1)}>
+                    {/* <TouchableOpacity onPress={() => changeTile(1)}>
                         <MaterialIcons name="add-circle" size={32} color="#b80202" style={{marginVertical:5, marginHorizontal:10}} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
 
                 </View>
@@ -134,14 +142,14 @@ export default function LiveScreen({navigation}){
                     <MaterialIcons
                             name='close'
                             size={30}
-                            color="#b80202"
+                            color={globalColor.LightGray}
                             
                             onPress={() => setModalOpen(false)}
                             style={globalStyles.modalClose}
                         />
                     <View style={styles.vwTileText}>
                         <CardGrid type='header'>
-                            <TouchableOpacity onPress={() => changeTile(2)}>
+                            <TouchableOpacity onPress={mapPressHandlerAll}>
                                 <Text style={{color:'#fff',fontSize:15}}>All cameras</Text>
                             </TouchableOpacity>
                         </CardGrid>
